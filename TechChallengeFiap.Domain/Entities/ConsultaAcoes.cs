@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace TechChallengeFiap.Domain.Entities
 {
-    public class ConsultaAcoes
+    public class ConsultaAcoes: Entity
     {
-        public int Id { get; set; }
         public string Symbol { get; set; }
         public DateTime DataConsulta { get; set; }
+        public int UsuarioId { get; set; } // Chave estrangeira para Usuario
+        public Usuario Usuario { get; set; } // Propriedade de navegação para Usuario
     }
 }

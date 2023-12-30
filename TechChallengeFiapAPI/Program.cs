@@ -12,7 +12,7 @@ using FluentValidation.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("ProdutosConection");
+var connectionString = builder.Configuration.GetConnectionString("TechChallengeConection");
 
 builder.Services.AddDbContext<ConsultaAcoesDBContext>(
     o => o.UseSqlServer(connectionString)
