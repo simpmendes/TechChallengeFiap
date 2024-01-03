@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TechChallengeFiap.Application.DTOs;
 using TechChallengeFiap.Application.Interfaces;
 using TechChallengeFiap.Application.Services;
 using TechChallengeFiap.Domain.Entities;
+using TechChallengeFiap.Domain.Enums;
 
 namespace TechChallengeFiapAPI.Controllers
 {
@@ -20,6 +22,8 @@ namespace TechChallengeFiapAPI.Controllers
             _logger = logger;
             _usuarioService = usuarioService;
         }
+        [Authorize]
+        [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet("obter-todos-com-pedidos/{id}")]
         public async Task<IActionResult> ObterComConsultas(int id)
         {
@@ -35,6 +39,8 @@ namespace TechChallengeFiapAPI.Controllers
             }
             
         }
+        [Authorize]
+        [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet()]
         public async Task<IActionResult> ObterTodosUsuarios()
         {
@@ -51,6 +57,8 @@ namespace TechChallengeFiapAPI.Controllers
             }
 
         }
+        [Authorize]
+        [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet("obter-por-usuario-id/{id}")]
         public IActionResult ObterPorUsuarioId(int id)
         {
