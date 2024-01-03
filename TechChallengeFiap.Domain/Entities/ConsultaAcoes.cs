@@ -12,5 +12,16 @@ namespace TechChallengeFiap.Domain.Entities
         public DateTime DataConsulta { get; set; }
         public int UsuarioId { get; set; } // Chave estrangeira para Usuario
         public Usuario Usuario { get; set; } // Propriedade de navegação para Usuario
+
+        public ConsultaAcoes()
+        {
+            
+        }
+        public ConsultaAcoes(ConsultaAcoes consulta)
+        {
+            Symbol = consulta.Symbol;
+            DataConsulta = consulta.DataConsulta;
+            UsuarioId = consulta.UsuarioId;
+        }
     }
 }

@@ -13,6 +13,23 @@ namespace TechChallengeFiap.Domain.Entities
         public string NomeUsuario { get; set; }
         public string Senha { get; set; }
         public TipoPermissao Permissao { get; set; }
-        public ICollection<ConsultaAcoes> ConsultaAcoes { get; set; }
+        public ICollection<ConsultaAcoes> ConsultasAcoes { get; set; }
+
+        public Usuario()
+        {
+                
+        }
+        public Usuario(Usuario inputModel)
+        {
+            Nome = inputModel.Nome;
+            NomeUsuario = inputModel.NomeUsuario;
+            Senha = inputModel.Senha;
+            Permissao = TipoPermissao.Usuario;
+        }
+        public Usuario(int id, string nome)
+        {
+            Id = id;
+            Nome = nome;
+        }
     }
 }

@@ -7,7 +7,6 @@ namespace TechChallengeFiap.Application.Services
     public class CotacoesAcoesService: ICotacoesAcoesService
     {
         private readonly ILogger<CotacoesAcoesService> _logger;
-        private readonly HttpClient _httpClient;
         private readonly IApiExternaFinanceIntegration _apiExternaFinanceIntegration;
 
         public CotacoesAcoesService(ILogger<CotacoesAcoesService> logger,
@@ -19,8 +18,7 @@ namespace TechChallengeFiap.Application.Services
         public async Task<string> GetCotacao(string symbol)
         {
             try
-            {
-                
+            {      
                 return await _apiExternaFinanceIntegration.GetCotacaoBySimbol(symbol);
             }
             catch (Exception ex)

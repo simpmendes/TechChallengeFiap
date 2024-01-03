@@ -48,5 +48,9 @@ namespace TechChallengeFiap.Infra.Data
         {
             return _dbSet.ToList();
         }
+        public async Task<IList<T>> ObterTodosAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
     }
 }

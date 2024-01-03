@@ -26,7 +26,7 @@ namespace TechChallengeFiap.Infra.Data.Context
                       .IsRequired();
 
                 entity.HasOne(e => e.Usuario)
-                      .WithMany(u => u.ConsultaAcoes)
+                      .WithMany(u => u.ConsultasAcoes)
                       .HasForeignKey(e => e.UsuarioId)
                       .OnDelete(DeleteBehavior.Cascade); // Exemplo de deleção em cascata
             });
@@ -35,15 +35,19 @@ namespace TechChallengeFiap.Infra.Data.Context
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.Property(e => e.NomeUsuario)
+                      .HasColumnType("VARCHAR(50)")
                       .IsRequired();
 
+                entity.Property(e => e.Nome).HasColumnType("VARCHAR(100)");
+
                 entity.Property(e => e.Senha)
+                      .HasColumnType("VARCHAR(50)")
                       .IsRequired();
 
                 entity.Property(e => e.Permissao)
                       .IsRequired();
 
-                entity.HasMany(u => u.ConsultaAcoes)
+                entity.HasMany(u => u.ConsultasAcoes)
                       .WithOne(ca => ca.Usuario)
                       .HasForeignKey(ca => ca.UsuarioId)
                       .OnDelete(DeleteBehavior.Cascade); // Exemplo de deleção em cascata
