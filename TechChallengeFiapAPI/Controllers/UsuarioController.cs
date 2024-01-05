@@ -22,7 +22,7 @@ namespace TechChallengeFiapAPI.Controllers
             _logger = logger;
             _usuarioService = usuarioService;
         }
-        [Authorize]
+        
         [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet("obter-todos-com-pedidos/{id}")]
         public async Task<IActionResult> ObterComConsultas(int id)
@@ -39,7 +39,7 @@ namespace TechChallengeFiapAPI.Controllers
             }
             
         }
-        [Authorize]
+        
         [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet()]
         public async Task<IActionResult> ObterTodosUsuarios()
@@ -57,7 +57,7 @@ namespace TechChallengeFiapAPI.Controllers
             }
 
         }
-        [Authorize]
+        
         [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet("obter-por-usuario-id/{id}")]
         public IActionResult ObterPorUsuarioId(int id)
