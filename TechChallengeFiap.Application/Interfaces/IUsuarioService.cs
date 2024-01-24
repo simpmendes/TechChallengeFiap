@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,9 @@ namespace TechChallengeFiap.Application.Interfaces
         Task<Usuario> UsuarioComConsultas(int id);
         Task<List<UsuarioViewModel>> ObterTodos();
         Usuario ObterPorId(int id);
-        void CriarUsuario(CadastrarUsuarioDTO usuarioDto);
-        void AlterarUsuario(AlterarUsuarioDTO usuarioDto);
-        void DeletarUsuario(int id);
+        Task<IActionResult> CriarUsuario(CadastrarUsuarioDTO usuarioDto);
+        Task<IActionResult> AlterarUsuario(AlterarUsuarioDTO usuarioDto);
+        Task<IActionResult> DeletarUsuario(int id);
 
     }
 }

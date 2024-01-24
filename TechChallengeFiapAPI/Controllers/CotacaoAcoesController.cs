@@ -18,7 +18,6 @@ namespace TechChallengeFiap.Controllers
             _logger = logger;
             _cotacaoAcoesService = cotacoesAcoesService;
         }
-        [Authorize]
         [Authorize(Roles = $"{Permissoes.Administrador}, {Permissoes.Usuario}")]
         [HttpGet("{simbolo}")]
         public async Task<IActionResult> GetCotacao(string simbolo)
@@ -34,7 +33,6 @@ namespace TechChallengeFiap.Controllers
                 return StatusCode(500, "Erro interno ao processar a solicitação.");
             }
         }
-        [Authorize]
         [Authorize(Roles = $"{Permissoes.Administrador}, {Permissoes.Usuario}")]
         [HttpGet("top10")]
         public async Task<IActionResult> GetTop10SubidasEDecidas()

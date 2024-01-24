@@ -67,9 +67,9 @@ builder.Services.AddSwaggerGen(c =>
                         Array.Empty<string>()
                     }
                 });
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlpath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlpath);
+    //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    //var xmlpath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    //c.IncludeXmlComments(xmlpath);
 });
 
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
