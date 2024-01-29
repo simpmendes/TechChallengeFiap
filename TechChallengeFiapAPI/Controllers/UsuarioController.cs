@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TechChallengeFiap.Application.DTOs;
 using TechChallengeFiap.Application.Interfaces;
 using TechChallengeFiap.Application.Services;
@@ -12,7 +13,6 @@ namespace TechChallengeFiapAPI.Controllers
     [Route("Usuario")]
     public class UsuarioController : ControllerBase
     {
-
         private readonly ILogger<UsuarioController> _logger;
         private readonly IUsuarioService _usuarioService;
 
@@ -22,7 +22,7 @@ namespace TechChallengeFiapAPI.Controllers
             _logger = logger;
             _usuarioService = usuarioService;
         }
-        
+
         [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet("obter-todos-com-pedidos/{id}")]
         public async Task<IActionResult> ObterComConsultas(int id)
@@ -37,9 +37,9 @@ namespace TechChallengeFiapAPI.Controllers
                 _logger.LogError($"Erro ao buscar todos os usuários com consultas- Exception Forçada: {ex.Message}");
                 return StatusCode(500, "Erro interno ao processar a solicitação.");
             }
-            
+
         }
-        
+
         [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet()]
         public async Task<IActionResult> ObterTodosUsuarios()
@@ -47,7 +47,7 @@ namespace TechChallengeFiapAPI.Controllers
             try
             {
                 _logger.LogInformation("Executando método ObterTodosUsuarios");
-                
+
                 return Ok(await _usuarioService.ObterTodos());
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace TechChallengeFiapAPI.Controllers
             }
 
         }
-        
+
         [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpGet("obter-por-usuario-id/{id}")]
         public IActionResult ObterPorUsuarioId(int id)
@@ -72,8 +72,10 @@ namespace TechChallengeFiapAPI.Controllers
                 _logger.LogError(ex, $"{DateTime.Now} - Exception Forçada: {ex.Message}");
                 return BadRequest();
             }
-            
+
         }
+
+        [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpPost()]
         public IActionResult CriarUsuario(CadastrarUsuarioDTO usuarioDto)
         {
@@ -91,24 +93,39 @@ namespace TechChallengeFiapAPI.Controllers
                 return BadRequest();
             }
         }
+
         [HttpPut()]
         public IActionResult AlterarUsuario(AlterarUsuarioDTO usuarioDto)
         {
-            try
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+            var userPermissao = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (int.Parse(userId) == usuarioDto.Id || userPermissao== "Administrador")
             {
-                _logger.LogInformation("Executando método AlterarUsuario");
-                _usuarioService.AlterarUsuario(usuarioDto);
-                var mensagem = $"Usuário alterado com sucesso! | Nome: {usuarioDto.Nome}";
-                _logger.LogInformation(mensagem);
-                return Ok(mensagem);
+                try
+                {
+                    _logger.LogInformation("Executando método AlterarUsuario");
+                    _usuarioService.AlterarUsuario(usuarioDto);
+                    var mensagem = $"Usuário alterado com sucesso! | Nome: {usuarioDto.Nome}";
+                    _logger.LogInformation(mensagem);
+                    return Ok(mensagem);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"{DateTime.Now} - Exception Forçada: {ex.Message}");
+                    return BadRequest();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, $"{DateTime.Now} - Exception Forçada: {ex.Message}");
-                return BadRequest();
+                _logger.LogError("Não é possivel alterar outro usuário.");
+                return BadRequest("Não é possivel alterar outro usuário.");
             }
 
         }
+
+        [Authorize(Roles = $"{Permissoes.Administrador}")]
         [HttpDelete("{id}")]
         public IActionResult DeletarUsuario(int id)
         {

@@ -29,10 +29,10 @@ namespace TechChallengeFiap.Infra.Services
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[]
-                {
+                {  
                     new Claim(ClaimTypes.Name, usuario.NomeUsuario),
                     new Claim(ClaimTypes.Role, usuario.Permissao.ToString()),
-                    new Claim("Id", usuario.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(

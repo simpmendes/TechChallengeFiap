@@ -24,7 +24,7 @@ namespace TechChallengeFiap.Domain.Entities
             Nome = inputModel.Nome;
             NomeUsuario = inputModel.NomeUsuario;
             Senha = inputModel.Senha;
-            Permissao = TipoPermissao.Usuario;
+            Permissao = inputModel.Permissao;
         }
         public Usuario(int id, string nome)
         {

@@ -34,7 +34,7 @@ public class UsuarioService : IUsuarioService
         var usuariosViewModel = new List<UsuarioViewModel>();
         foreach (var usuario in usuarios)
         {
-            var usuarioViewModel = new UsuarioViewModel(usuario.Nome, usuario.NomeUsuario);
+            var usuarioViewModel = new UsuarioViewModel(usuario.Id,usuario.Nome, usuario.NomeUsuario,usuario.Permissao);
             usuariosViewModel.Add(usuarioViewModel);
         }
 
@@ -50,6 +50,7 @@ public class UsuarioService : IUsuarioService
             Nome = usuarioDto.Nome,
             NomeUsuario = usuarioDto.NomeUsuario,
             Senha = usuarioDto.Senha,
+            Permissao=usuarioDto.Permissao,
         };
         _usuarioRepository.Cadastrar(new Usuario(usuario));
         return new ResultObject(HttpStatusCode.Created, usuario);

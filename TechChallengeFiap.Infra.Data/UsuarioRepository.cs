@@ -53,7 +53,7 @@ namespace TechChallengeFiap.Infra.Data
         public async Task<List<Usuario>> ObterTodosUsuariosAsync()
         {
             using var dbConnection = new SqlConnection(_connectionString);
-            var query = "SELECT [Nome],[NomeUsuario] FROM [TechChallengeDB].[dbo].[Usuarios]";
+            var query = "SELECT [id],[Nome],[NomeUsuario],[Permissao] FROM [TechChallengeDB].[dbo].[Usuarios]";
             return  dbConnection.Query<Usuario>(query).ToList();
         }
 
