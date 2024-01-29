@@ -23,5 +23,11 @@ namespace TechChallengeFiap.Domain.Entities
             DataConsulta = consulta.DataConsulta;
             UsuarioId = consulta.UsuarioId;
         }
+        public ConsultaAcoes(string symbol, Usuario usuario)
+        {
+            Symbol = symbol;
+            DataConsulta = DateTime.Now;
+            Usuario = usuario;
+        }
     }
 }

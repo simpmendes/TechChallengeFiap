@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TechChallengeFiap.Application.Interfaces;
 using TechChallengeFiap.Domain.Enums;
 
@@ -24,8 +25,8 @@ namespace TechChallengeFiap.Controllers
         public async Task<IActionResult> GetCotacao(string simbolo)
         {
             try
-            {
-                var content = await _cotacaoAcoesService.GetCotacao(simbolo);
+            {       
+                var content = await _cotacaoAcoesService.GetCotacao(simbolo, GetUserId());
                 return Ok(content);
             }
             catch (Exception ex)
@@ -34,6 +35,7 @@ namespace TechChallengeFiap.Controllers
                 return StatusCode(500, "Erro interno ao processar a solicitação.");
             }
         }
+
         [Authorize]
         [Authorize(Roles = $"{Permissoes.Administrador}, {Permissoes.Usuario}")]
         [HttpGet("top10")]
@@ -41,7 +43,7 @@ namespace TechChallengeFiap.Controllers
         {
             try
             {
-                var content = await _cotacaoAcoesService.GetTop10SubidasEDecidas();
+                var content = await _cotacaoAcoesService.GetTop10SubidasEDecidas(GetUserId());
                 return Ok(content);
             }
             catch (Exception ex)
@@ -50,7 +52,12 @@ namespace TechChallengeFiap.Controllers
                 return StatusCode(500, "Erro interno ao processar a solicitação.");
             }
         }
-
+        private int GetUserId()
+        {
+            var userValue = (HttpContext.User.Identity as ClaimsIdentity)?.FindFirst("Id").Value;
+            int userId = Convert.ToInt32(userValue);
+            return userId;
+        }
 
     }
 }

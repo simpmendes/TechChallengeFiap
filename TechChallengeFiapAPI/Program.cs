@@ -29,6 +29,7 @@ builder.Services.AddScoped<IApiExternaFinanceIntegration, ApiExternaFinanceInteg
 builder.Services.AddScoped<ICotacoesAcoesService, CotacoesAcoesService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IConsultaAcoesRepository, ConsultaAcoesRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 //builder.Services.AddDbContext<JobsDbContext>(
 //    o => o.UseInMemoryDatabase("JobsDb")
